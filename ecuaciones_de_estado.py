@@ -20,7 +20,7 @@ texto = """
 print(texto)
 
 R = 8.314 #J/mol-K
-print("Constante universal de gases utilizada para cálculos: " + R + " J/mol-K \n" )
+print("Constante universal de gases utilizada para cálculos: {R} J/mol-K \n" )
 
 print("Ingrese propiedades termodinámicas de la sustancia\n")
 while comprobante == 1:
