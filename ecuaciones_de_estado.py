@@ -9,7 +9,6 @@ para ecuaciones cúbicas de estado de sustancias puras
 Introduction to Chemical Engineering Thermodynamics, 
 by J.M. Smith, H.C. Van Ness, M.M. Abott"""
        
-
 import sympy 
 from sympy import *
 
