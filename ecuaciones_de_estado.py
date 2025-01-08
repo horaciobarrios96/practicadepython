@@ -10,6 +10,12 @@ Introduction to Chemical Engineering Thermodynamics,
 by J.M. Smith, H.C. Van Ness, M.M. Abott"""
        
 
+import sympy 
+from sympy import *
+
+#Esta librería nos permitirá resolver la ecuación cúbica dependiendo la variable a calcular (P, v o T)
+#Documentación útil: https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html
+
 def ecuacion_de_estado():
     
     texto = """
@@ -45,32 +51,152 @@ def ecuacion_de_estado():
             #Alternativa: utilizar la sentencia 'break' en vez de 'comprobante = 0'
             
     contador = 1 #Se inicializa variable contador que registra el número de cálculos realizados
-    while contador >= 1:
+    while contador == 1:
         #Lectura de opciones, se evaluará en 4 casos, uno por cada ecuación de estado cúbica
         opcion = int(input("Ingrese opción válida: \n"))
         
+        mensaje_eleccion = """
+        ¿Qué variable desea calcular?\n
+        1. Presión (Pa)\n
+        2. Volumen (m^3/mol)\n
+        3. Temperatura (K)\n
+        """
+        #Mensaje que le dice al usuario que cálculo desea efectuar
+        #Se registrará la elección del usuario para hacer el cálculo correspondiente
+        
+        #Primero, se analiza que opción ingresó el usuario
         match opcion:
-            case 1:
+            
+            case 1: #Ecuación de Van der Waals
                 print("Ecuación de van der Waals seleccionada\n")
-                #Inicialización de parámetros 'a' y 'b' de la ecuación cúbica de estado
+
                 a = (27/64)*R**2*Tc**2/Pc
                 b = (1/8)*R*Tc/Pc
+                print(f"a = {a}\n")
+                print(f"b = {b}\n")
+                eleccion = int(input(mensaje_eleccion))
+                if eleccion == 1:
+                    vol = float(input("Ingrese V [m^3/mol]: \n"))
+                    temp = float(input("Ingrese T [K]: \n"))
+                    P = symbols('P')
+                    init_printing(use_unicode=true )
+                    P = solveset(Eq(P,(R*temp)/(vol - b) - a/vol**2),P)
+                    solucion = print(f"P = {P} Pa\n")
+                    break
+                    return solucion
+                elif eleccion == 2:
+                    pres = float(input("Ingrese P [Pa]: \n"))
+                    temp = float(input("Ingrese T [K]: \n"))
+                    V = symbols('V')
+                    init_printing(use_unicode=true )
+                    V = solveset(Eq(pres,(R*temp)/(V - b) - a/V**2),V)
+                    solucion = print(f"V = {V} m^3/mol\n")
+                    break
+                    return solucion    
+                elif eleccion == 3:
+                    pres = float(input("Ingrese P [Pa]: \n"))
+                    vol = float(input("Ingrese V [m^3/mol]: \n"))
+                    T = symbols('T')
+                    init_printing(use_unicode=true )
+                    T = solveset(Eq(pres,(R*T)/(vol - b) - a/vol**2),T)
+                    solucion = print(f"T = {T} K\n")
+                    break
+                    return solucion                                 
+                else:
+                    solucion = print("Opción no válida")
+                    contador = 1
+                    return solucion
                 
                 
-            case 2:
+            case 2: #Ecuación de Redlich-Kwong
                 print("Ecuación de Redlich-Kwong seleccionada\n")
-                #Inicialización de parámetros 'a' y 'b' de la ecuación cúbica de estado
-                a = 0.42748*((T/Tc)**-0.5)*R**2*Tc**2/Pc
-                b = 0.08664*R*Tc/Pc
                 
-            case 3:
+                eleccion = int(input(mensaje_eleccion))
+                if eleccion == 1:
+                    vol = float(input("Ingrese V [m^3/mol]: \n"))
+                    temp = float(input("Ingrese T [K]: \n"))
+                    a = 0.42748*((temp/Tc)**-0.5)*R**2*Tc**2/Pc
+                    b = 0.08664*R*Tc/Pc
+                    P = symbols('P')
+                    init_printing(use_unicode=true )
+                    P = solveset(Eq(P,(R*temp)/(vol - b) - a/(vol*(vol + b))),P)
+                    solucion = print(f"P = {P} Pa\n")
+                    break
+                    return solucion
+                elif eleccion == 2:
+                    pres = float(input("Ingrese P [Pa]: \n"))
+                    temp = float(input("Ingrese T [K]: \n"))
+                    a = 0.42748*((temp/Tc)**-0.5)*R**2*Tc**2/Pc
+                    b = 0.08664*R*Tc/Pc
+                    V = symbols('V')
+                    init_printing(use_unicode=true )
+                    V = solveset(Eq(P,(R*temp)/(V - b) - a/(V*(V + b))),V)
+                    solucion = print(f"V = {V} m^3/mol\n")
+                    break
+                    return solucion    
+                elif eleccion == 3:
+                    pres = float(input("Ingrese P [Pa]: \n"))
+                    vol = float(input("Ingrese V [m^3/mol]: \n"))
+                    T = symbols('T')
+                    a = 0.42748*((T/Tc)**-0.5)*R**2*Tc**2/Pc
+                    b = 0.08664*R*Tc/Pc
+                    init_printing(use_unicode=true )
+                    T = solveset(Eq(pres,(R*T)/(vol - b) - a/vol**2),T)
+                    solucion = print(f"T = {T} K\n")
+                    break
+                    return solucion                                 
+                else:
+                    solucion = print("Opción no válida")
+                    contador = 1
+                    return solucion               
+                
+                
+            case 3: #Ecuación de Soave-Redlich-Kwong
                 print("Ecuación de Soave-Redlich-Kwong seleccionada\n")
-                #Inicialización de parámetros 'a' y 'b' de la ecuación cúbica de estado
-                alfa = (1+(0.480+1.574*omega-0.176*omega**2)*(1-(T/Tc)**0.5))**2
-                a = 0.42748*alfa*R**2*Tc**2/Pc
-                b = 0.08664*R*Tc/Pc
+
+                eleccion = int(input(mensaje_eleccion))
+                if eleccion == 1:
+                    vol = float(input("Ingrese V [m^3/mol]: \n"))
+                    temp = float(input("Ingrese T [K]: \n"))
+                    alfa = (1+(0.480+1.574*omega-0.176*omega**2)*(1-(temp/Tc)**0.5))**2
+                    a = 0.42748*alfa*R**2*Tc**2/Pc
+                    b = 0.08664*R*Tc/Pc
+                    P = symbols('P')
+                    init_printing(use_unicode=true )
+                    P = solveset(Eq(P,(R*temp)/(vol - b) - a/(vol*(vol + b))),P)
+                    solucion = print(f"P = {P} Pa\n")
+                    break
+                    return solucion
+                elif eleccion == 2:
+                    pres = float(input("Ingrese P [Pa]: \n"))
+                    temp = float(input("Ingrese T [K]: \n"))
+                    a = 0.42748*((temp/Tc)**-0.5)*R**2*Tc**2/Pc
+                    b = 0.08664*R*Tc/Pc
+                    V = symbols('V')
+                    init_printing(use_unicode=true )
+                    V = solveset(Eq(P,(R*temp)/(V - b) - a/(V*(V + b))),V)
+                    solucion = print(f"V = {V} m^3/mol\n")
+                    break
+                    return solucion    
+                elif eleccion == 3:
+                    pres = float(input("Ingrese P [Pa]: \n"))
+                    vol = float(input("Ingrese V [m^3/mol]: \n"))
+                    T = symbols('T')
+                    a = 0.42748*((T/Tc)**-0.5)*R**2*Tc**2/Pc
+                    b = 0.08664*R*Tc/Pc
+                    init_printing(use_unicode=true )
+                    T = solveset(Eq(pres,(R*T)/(vol - b) - a/vol**2),T)
+                    solucion = print(f"T = {T} K\n")
+                    break
+                    return solucion                                 
+                else:
+                    solucion = print("Opción no válida")
+                    contador = 1
+                    return solucion               
+
+
                 
-            case 4:
+            case 4: #Ecuación de Peng-Robinson
                 print("Ecuación de Peng-Robinson seleccionada\n")
                 #Inicialización de parámetros 'a' y 'b' de la ecuación cúbica de estado
                 alfa = (1+(0.37464+1.5422*omega-0.26992*omega**2)*(1-(T/Tc)**0.5))**2
@@ -78,6 +204,8 @@ def ecuacion_de_estado():
                 b = 0.07780*R*Tc/Pc
                 eps = 1 - 2**0.5
                 sig = 1 + 2**0.5
+
+
                 
             case _:
                 print("Entrada inválida, intente de nuevo\n")
