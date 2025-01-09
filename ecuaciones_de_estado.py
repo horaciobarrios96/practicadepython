@@ -254,3 +254,4 @@ def ecuacion_de_estado():
 
                 
 
+ecuacion_de_estado()
