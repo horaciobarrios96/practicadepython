@@ -52,7 +52,6 @@ def ecuacion_de_estado():
     contador = 1 #Se inicializa variable contador que registra el número de cálculos realizados
     while contador == 1:
         #Lectura de opciones, se evaluará en 4 casos, uno por cada ecuación de estado cúbica
-        opcion = int(input("Ingrese opción válida: \n"))
         
         mensaje_eleccion = """
         ¿Qué variable desea calcular?\n
@@ -62,17 +61,14 @@ def ecuacion_de_estado():
         """
         #Mensaje que le dice al usuario que cálculo desea efectuar
         #Se registrará la elección del usuario para hacer el cálculo correspondiente
+        print(mensaje_eleccion)
+        opcion = int(input("Ingrese opción válida: \n"))
         
         #Primero, se analiza que opción ingresó el usuario
         match opcion:
             
             case 1: #Ecuación de Van der Waals
                 print("Ecuación de van der Waals seleccionada\n")
-
-                a = (27/64)*R**2*Tc**2/Pc
-                b = (1/8)*R*Tc/Pc
-                print(f"a = {a}\n")
-                print(f"b = {b}\n")
                 eleccion = int(input(mensaje_eleccion))
                 if eleccion == 1:
                     vol = float(input("Ingrese V [m^3/mol]: \n"))
