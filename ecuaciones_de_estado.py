@@ -70,6 +70,8 @@ def ecuacion_de_estado():
             case 1: #Ecuación de Van der Waals
                 print("Ecuación de van der Waals seleccionada\n")
                 eleccion = int(input(mensaje_eleccion))
+                a = (27/64)*R**2*Tc**2/Pc
+                b = (1/8)*R*Tc/Pc
                 if eleccion == 1:
                     vol = float(input("Ingrese V [m^3/mol]: \n"))
                     temp = float(input("Ingrese T [K]: \n"))
